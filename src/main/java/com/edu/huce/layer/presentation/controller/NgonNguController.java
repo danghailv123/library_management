@@ -1,6 +1,5 @@
 package com.edu.huce.layer.presentation.controller;
 
-import com.edu.huce.layer.application.domain.dto.DocGiaDTO;
 import com.edu.huce.layer.application.domain.dto.NgonNguDTO;
 import com.edu.huce.layer.application.service.INgonNguService;
 import com.edu.huce.utility.response.Response;
@@ -45,6 +44,16 @@ public class NgonNguController {
         try {
             log.info(ngonNguDTO.toString());
             return ResponseFactory.getSuccessResponse(Response.SUCCESS, ngonNguService.updateNgonNgu(ngonNguDTO));
+        } catch (Exception exception) {
+            log.error(exception.getMessage(), exception);
+            return ResponseFactory.getClientErrorResponse(exception.getMessage());
+        }
+    }
+
+    @DeleteMapping("/detele/{id_ngon_ngu}")
+    public Response deletedUser(@PathVariable(name = "id_ngon_ngu") String id) {
+        try {
+            return ResponseFactory.getSuccessResponse(Response.SUCCESS, ngonNguService.deleteNgonNgu(id));
         } catch (Exception exception) {
             log.error(exception.getMessage(), exception);
             return ResponseFactory.getClientErrorResponse(exception.getMessage());

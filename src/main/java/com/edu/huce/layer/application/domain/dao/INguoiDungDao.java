@@ -8,5 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface INguoiDungDao extends JpaRepository<NguoiDung, String> {
     NguoiDung findNguoiDungByMaNguoiDung(String id);
 
+    NguoiDung findNguoiDungByUserNameAndPassword(String username, String password);
+
     Page<NguoiDung> findNguoiDungByUserName(String username, Pageable pageable);
 }

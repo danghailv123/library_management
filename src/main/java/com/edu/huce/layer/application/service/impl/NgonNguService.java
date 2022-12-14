@@ -2,9 +2,7 @@ package com.edu.huce.layer.application.service.impl;
 
 import com.edu.huce.config.Constants;
 import com.edu.huce.layer.application.domain.dao.INgonNguDao;
-import com.edu.huce.layer.application.domain.dto.DocGiaDTO;
 import com.edu.huce.layer.application.domain.dto.NgonNguDTO;
-import com.edu.huce.layer.application.domain.entity.DocGia;
 import com.edu.huce.layer.application.domain.entity.NgonNgu;
 import com.edu.huce.layer.application.service.INgonNguService;
 import com.edu.huce.utility.response.ResultResponse;
@@ -44,6 +42,15 @@ public class NgonNguService implements INgonNguService {
     public NgonNguDTO getNgonNgu(String id) {
         return Constants.SERIALIZER.convertValue(ngonNguDao.getNgonNguByMaNgonNgu(id), NgonNguDTO.class);
     }
+
+    @Override
+    public NgonNguDTO deleteNgonNgu(String id) throws Exception {
+        NgonNgu ngonNgu = ngonNguDao.getNgonNguByMaNgonNgu(id);
+        if (ngonNgu == null) throw new Exception("Language does not exist");
+        ngonNguDao.delete(ngonNgu);
+        return Constants.SERIALIZER.convertValue(ngonNgu, NgonNguDTO.class);
+    }
+
 
     @Override
     public ResultResponse getListNgonNgu(Integer page, Integer limit, String keyword, Integer sort) {

@@ -50,6 +50,16 @@ public class DocGiaController {
         }
     }
 
+    @DeleteMapping("/detele/{id_doc_gia}")
+    public Response deletedUser(@PathVariable(name = "id_doc_gia") String id) {
+        try {
+            return ResponseFactory.getSuccessResponse(Response.SUCCESS, docGiaService.deletedDocGia(id));
+        } catch (Exception exception) {
+            log.error(exception.getMessage(), exception);
+            return ResponseFactory.getClientErrorResponse(exception.getMessage());
+        }
+    }
+
     @GetMapping("/list")
     public Response getList(@RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
                             @RequestParam(name = "limit", defaultValue = "30", required = false) Integer limit,

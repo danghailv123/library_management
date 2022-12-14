@@ -2,6 +2,7 @@ package com.edu.huce.layer.application.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -18,8 +19,10 @@ import lombok.NoArgsConstructor;
 public class PhanQuyen {
     @Id
     @Column(name = "ma_quyen")
+    @JsonProperty("ma_quyen")
     private String maQuyen;
 
     @Column(name = "ten_quyen")
+    @JsonProperty("ten_quyen")
     private String tenQuyen;
 }

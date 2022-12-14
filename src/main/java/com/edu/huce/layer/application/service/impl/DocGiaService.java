@@ -43,6 +43,14 @@ public class DocGiaService implements IDocGiaService {
     }
 
     @Override
+    public DocGiaDTO deletedDocGia(String id) throws Exception {
+        DocGia docGia = docGiaDao.getDocGiaByMaDocGia(id);
+        if (docGia == null) throw new Exception("Readers don't exist");
+        docGiaDao.delete(docGia);
+        return Constants.SERIALIZER.convertValue(docGia, DocGiaDTO.class);
+    }
+
+    @Override
     public ResultResponse getListDocGia(Integer page, Integer limit, String keyword, Integer sort) {
         Pageable pageable = PageRequest.of(page, limit);
         Page<DocGia> docGias;

@@ -10,5 +10,7 @@ public interface IDocGiaService {
 
     DocGiaDTO getDocGia(String id);
 
+    DocGiaDTO deletedDocGia(String id) throws Exception;
+
     ResultResponse getListDocGia(Integer page, Integer limit, String keyword, Integer sort);
 }

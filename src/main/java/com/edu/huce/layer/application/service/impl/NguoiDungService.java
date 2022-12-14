@@ -1,11 +1,8 @@
 package com.edu.huce.layer.application.service.impl;
 
-import com.edu.huce.config.Constants;
 import com.edu.huce.layer.application.domain.dao.INguoiDungDao;
 import com.edu.huce.layer.application.domain.dao.IPhanQuyenDao;
-import com.edu.huce.layer.application.domain.dto.NgonNguDTO;
 import com.edu.huce.layer.application.domain.dto.NguoiDungDTO;
-import com.edu.huce.layer.application.domain.entity.NgonNgu;
 import com.edu.huce.layer.application.domain.entity.NguoiDung;
 import com.edu.huce.layer.application.domain.entity.PhanQuyen;
 import com.edu.huce.layer.application.domain.model.mapper.NguoiDungMapper;
@@ -14,10 +11,12 @@ import com.edu.huce.utility.response.ResultResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class NguoiDungService implements INguoiDungService {
 
     private final INguoiDungDao nguoiDungDao;
@@ -63,12 +62,26 @@ public class NguoiDungService implements INguoiDungService {
         List<NguoiDungDTO> nguoiDungDTOS = new ArrayList<>();
         for (NguoiDung nguoiDung : ngonNgus.getContent()) {
             PhanQuyen phanQuyen = phanQuyenDao.getPhanQuyenByMaQuyen(nguoiDung.getMaQuyen());
-            nguoiDungDTOS.add(NguoiDungMapper.entity2DTO(nguoiDung,phanQuyen));
+            nguoiDungDTOS.add(NguoiDungMapper.entity2DTO(nguoiDung, phanQuyen));
         }
         resultResponse.setData(nguoiDungDTOS);
         resultResponse.setPage(page);
         resultResponse.setLimit(limit);
         resultResponse.setTotal((int) ngonNgus.getTotalElements());
         return null;
+    }
+
+    @Override
+    public NguoiDungDTO deleteNguoiDung(String maNguoiDung) throws Exception {
+        NguoiDung nguoiDung = nguoiDungDao.findNguoiDungByMaNguoiDung(maNguoiDung);
+        if (nguoiDung == null) throw new Exception("User not exist!!!");
+        nguoiDungDao.delete(nguoiDung);
+        return NguoiDungMapper.entity2DTO(nguoiDung, null);
+    }
+
+    @Override
+    public void login(NguoiDungDTO nguoiDungDTO) throws Exception {
+        NguoiDung nguoiDung = nguoiDungDao.findNguoiDungByUserNameAndPassword(nguoiDungDTO.getUserName(), NguoiDungMapper.MD5(nguoiDungDTO.getPassword()));
+        if (nguoiDung == null) throw new Exception("Loging error");
     }
 }

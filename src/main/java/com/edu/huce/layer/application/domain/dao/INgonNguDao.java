@@ -9,5 +9,6 @@ public interface INgonNguDao extends JpaRepository<NgonNgu, String> {
 
     NgonNgu getNgonNguByMaNgonNgu(String id);
 
+
     Page<NgonNgu> findNgonNguByTenNgonNgu(String ten, Pageable pageable);
 }

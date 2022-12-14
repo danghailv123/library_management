@@ -15,7 +15,7 @@ public class NguoiDungMapper {
         NguoiDungDTO nguoiDungDTO = new NguoiDungDTO();
         nguoiDungDTO.setMaNguoiDung(nguoiDung.getMaNguoiDung());
         nguoiDungDTO.setUserName(nguoiDung.getUserName());
-        nguoiDungDTO.setTenQuyen(phanQuyen.getTenQuyen());
+        if (phanQuyen != null) nguoiDungDTO.setTenQuyen(phanQuyen.getTenQuyen());
         return nguoiDungDTO;
     }
 
